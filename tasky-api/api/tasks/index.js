@@ -25,7 +25,9 @@ router.post('/', (req, res) => { // http POST handler for adding a new task, and
         description,
         deadline,
         priority,
-        done
+        done,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     };
     tasksData.tasks.push(newTask); // NOT instance. the tasksData object was imported from tasksData.js, but now exists as a variable accessible here.
     res.status(201).json(newTask); // can these methods be swapped? YES
@@ -38,6 +40,7 @@ router.put('/:id', (req, res) => {
     if (taskIndex === -1) {
         return res.status(404).json({ status: 404, message: 'Task not found' });
     }
+    req.body.updated_at = new Date().toISOString(); // add updated_at field to request body
     const updatedTask = { ...tasksData.tasks[taskIndex], ...req.body, id:id }; // overwrites the task's body with request body. (if request has a field that task does, that field is the new value for task)
     tasksData.tasks[taskIndex] = updatedTask; // overwrite the task in tasksData with updatedTask
     res.json(updatedTask);
