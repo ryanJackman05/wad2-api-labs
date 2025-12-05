@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import tasksRouter from './api/tasks';
+//... other imports
+import usersRouter from './api/users';
 import './db';
 
 dotenv.config();
@@ -19,7 +21,8 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
-app.use('/api/tasks', tasksRouter);
+app.use('/api/tasks', tasksRouter); //Tasks Router
+app.use('/api/users', usersRouter); //Users router
 app.use(errHandler); // last middleware to catch all errors
 
 app.listen(port, () => {
