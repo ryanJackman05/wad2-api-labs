@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import tasksRouter from './api/tasks';
 //... other imports
+import cors from 'cors';
 import usersRouter from './api/users';
 import './db';
 
@@ -21,6 +22,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
+app.use(cors()); // to enable CORS
 app.use('/api/tasks', tasksRouter); //Tasks Router
 app.use('/api/users', usersRouter); //Users router
 app.use(errHandler); // last middleware to catch all errors
